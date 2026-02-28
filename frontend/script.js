@@ -1,17 +1,27 @@
 async function predict() {
+    try {
+        const response = await fetch("https://real-estate-ml-s1f5.onrender.com/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                unit_area: parseFloat(document.getElementById("area").value),
+                total_rooms: parseInt(document.getElementById("rooms").value),
+                bathrooms: parseInt(document.getElementById("bathrooms").value)
+            })
+        });
 
-    const response = await fetch("https://real-estate-ml-s1f5.onrender.com/predict", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            unit_area: parseFloat(document.getElementById("area").value),
-            total_rooms: parseInt(document.getElementById("rooms").value),
-            bathrooms: parseInt(document.getElementById("bathrooms").value)
-        })
-    });
+        if (!response.ok) {
+            throw new Error("Server response not OK");
+        }
 
-    const data = await response.json();
+        const data = await response.json();
 
-    document.getElementById("result").innerText =
-        "Predicted Rent: ₹" + data.prediction;
+        document.getElementById("result").innerText =
+            "Predicted Rent: ₹" + data.prediction[0];
+
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("result").innerText =
+            "Error connecting to backend.";
+    }
 }
