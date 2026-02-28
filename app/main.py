@@ -5,8 +5,18 @@ import pandas as pd
 import logging
 import time
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Real Estate Rent Prediction API")
+app = FastAPI()
+
+# 🔥 Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 logging.basicConfig(level=logging.INFO)
 
