@@ -1,6 +1,6 @@
 async function predict() {
 
-    const response = await fetch("https://YOUR_BACKEND_URL/predict", {
+    const response = await fetch("https://real-estate-ml-s1f5.onrender.com/predict", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
